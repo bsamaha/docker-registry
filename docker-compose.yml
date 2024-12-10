@@ -1,11 +1,17 @@
 version: '3'
-
 services:
   registry:
     image: registry:latest
     ports:
-    - "5000:5000"
-    environment:
-      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+      - "5001:5000"
     volumes:
       - ./data:/data
+      - ./certs:/certs:ro
+      - ./config/config.yml:/etc/docker/registry/config.yml:ro
+    networks:
+      - registry_net
+    restart: always
+
+networks:
+  registry_net:
+    driver: bridge

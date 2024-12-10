@@ -8,17 +8,24 @@ storage:
   cache:
     blobdescriptor: inmemory
   filesystem:
-    rootdirectory: /var/lib/registry
+    rootdirectory: /data
 http:
   addr: :5000
   headers:
     X-Content-Type-Options: [nosniff]
+  secret: "mysecret123"
   tls:
     certificate: /certs/domain.crt
     key: /certs/domain.key
+    minimumtls: tls1.2
 maintenance:
   uploadpurging:
     enabled: true
     age: 168h
     interval: 24h
     dryrun: false
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3 
